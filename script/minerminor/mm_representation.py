@@ -11,7 +11,7 @@ def graph_to_vec_adjacency(graph):
 
 def graph_to_vec_laplacian(graph):
     """Convert a graph to a vector from laplacian matrix."""
-    mat = np.matrix(nx.laplacian_matrix(graph))
+    mat = nx.laplacian_matrix(graph).toarray()
     return np.squeeze(np.asarray(mat.reshape(-1)))
 
 

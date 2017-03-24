@@ -8,8 +8,9 @@ share/
 include/
 lab_script/
 pip-selfcheck.json
-script/base/
+script/base/*
 local/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

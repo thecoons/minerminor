@@ -44,3 +44,19 @@ def load_base(label_set_name):
             labels_set.append(label_set)
 
     return labels_set
+
+
+def create_sample_label_classification(labels_set):
+    """Create data and label set."""
+    data_set, label_set = [], []
+    for i, graph_set in enumerate(labels_set):
+        for graph in graph_set:
+            data_set.append(graph)
+            label_set.append(i)
+
+    return data_set, label_set
+
+
+# def create_train_test_generation(data_set, label_set, batch_size):
+#     """Create train and test with label associated (cross_validation)."""
+#     return train_test_split(data_set, label_set, batch_size=0.2)
