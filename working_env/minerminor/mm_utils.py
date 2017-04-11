@@ -9,6 +9,7 @@ import time
 import csv
 import datetime
 from sklearn.model_selection import learning_curve
+from minerminor import mm_representation as mmr
 
 
 def count_iterable(i):
@@ -108,6 +109,16 @@ def create_sample_label_classification(labels_set):
     return data_set, label_set
 
 
+def extract_miss_class(y_test, y_pred):
+    """Extract ind element miss classified from exp."""
+    miss_graph = []
+    for count, value in enumerate(y_test):
+        if value != y_pred[count]:
+            miss_graph.append(count)
+
+    return miss_graph
+
+
 def learning(classifier, X_train, X_test, y_train, y_test):
     """Learning and Predict function."""
     y_pred = classifier.fit(X_train, y_train).predict(X_test)
@@ -130,8 +141,9 @@ def experiment_generation(arr_generator, arr_nb_nodes, arr_ptree_rank,
                                           arr_ptree_rank,
                                           feature_size)
                 t1 = time.time()
+                gen_norm = generator.__name__.replace("_", "-")
                 path = "{0}/{1}_{2}_{3}_{4}/".format(path_dir,
-                                                     generator.__name__.replace("_", "-"),
+                                                     gen_norm,
                                                      nb_nodes,
                                                      arr_ptree_rank,
                                                      feature_size)
@@ -157,9 +169,9 @@ Gen : {0},\nNb_nd : {1},\nP-T_rk : {2},\nF_size : {3}, #F : {4}\n
                 #     show_graph(learning_base[i][0])
 
 
-
 def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
                         n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):
+    """learningCurve."""
     plt.figure()
     plt.title(title)
     if ylim is not None:

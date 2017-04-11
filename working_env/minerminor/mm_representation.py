@@ -1,6 +1,14 @@
 """Representation function for MinorMiner."""
 import numpy as np
 import networkx as nx
+import math
+
+
+def vec_to_graph(vec):
+    """Vector to graph."""
+    root = int(round(math.sqrt(len(vec))))
+
+    return nx.from_numpy_matrix(np.matrix(vec).reshape([root, root]))
 
 
 def graph_to_A3_minus_D(graph):
@@ -37,12 +45,14 @@ def A3_minus_D(learning_base):
 def graph_to_vec_adjacency(graph):
     """Convert a graph to a vector from adjacency matrix."""
     mat = nx.to_numpy_matrix(graph)
+
     return np.squeeze(np.asarray(mat.reshape(-1)))
 
 
 def graph_to_vec_laplacian(graph):
     """Convert a graph to a vector from laplacian matrix."""
     mat = nx.laplacian_matrix(graph).toarray()
+
     return np.squeeze(np.asarray(mat.reshape(-1)))
 
 

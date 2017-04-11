@@ -26,9 +26,9 @@ args = parser.parse_args()
 
 resultat_file = open("resultats/{0}_{1}.txt".format(args.path, dt.datetime.now().time()), "a")
 
-for classifieur in args.classifieur:
-    for representation in args.representation:
-        for directory in os.listdir(args.path):
+for directory in os.listdir(args.path):
+    for classifieur in args.classifieur:
+        for representation in args.representation:
             learning_base = mmu.load_base("{0}/{1}".format(args.path, directory))
             learning_base = representation(learning_base)
             # learning_base = mmr.labels_set_to_vec_laplacian_set(learning_base)
