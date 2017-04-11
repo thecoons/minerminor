@@ -27,7 +27,7 @@ from sklearn.metrics import precision_recall_fscore_support
 #
 # for g_set in learning_base:
 #     mmu.show_graph(g_set[0])
-path = "base_12/pTree_basic_cycle_generation_12_[0, 1]_500"
+path = "base_12/pTree_basic_cycle_generation_12_[0, 1]_500"m
 learning_base = mmu.load_base(path)
 
 # mmu.show_graph(learning_base[0][0])
