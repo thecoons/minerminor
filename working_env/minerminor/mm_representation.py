@@ -3,6 +3,37 @@ import numpy as np
 import networkx as nx
 
 
+def graph_to_A3_minus_D(graph):
+    """Convert graph to A3 - D(A2)."""
+    mat = nx.to_numpy_matrix(graph)
+    mat_2 = mat * mat
+    np.fill_diagonal(mat_2, 0)
+    res = mat_2 * mat
+    diag = np.diag(res)
+    idx = np.argsort(diag)[::-1]
+    res = res[idx, :][:, idx]
+
+    return np.squeeze(np.asarray(res.reshape(-1)))
+
+
+def graph_set_to_A3_minus_D(graph_set):
+    """Convert a graph set to vector."""
+    vec_A3_minus_set = []
+    for graph in graph_set:
+        vec_A3_minus_set.append(graph_to_A3_minus_D(graph))
+
+    return vec_A3_minus_set
+
+
+def A3_minus_D(learning_base):
+    """Convert blabla."""
+    learning_base_A3 = []
+    for graph_set in learning_base:
+        learning_base_A3.append(graph_set_to_A3_minus_D(graph_set))
+
+    return learning_base_A3
+
+
 def graph_to_vec_adjacency(graph):
     """Convert a graph to a vector from adjacency matrix."""
     mat = nx.to_numpy_matrix(graph)
@@ -33,7 +64,7 @@ def graph_set_to_vec_laplacian_set(graph_set):
     return vec_laplacian_set
 
 
-def labels_set_to_vec_adjacency_set(labels_set):
+def adjacency(labels_set):
     """Convert labels set (set of graph set) to vector adjacency."""
     labels_vec_adjacency = []
     for graph_set in labels_set:
@@ -42,7 +73,7 @@ def labels_set_to_vec_adjacency_set(labels_set):
     return labels_vec_adjacency
 
 
-def labels_set_to_vec_laplacian_set(labels_set):
+def laplacian(labels_set):
     """Convert labels set (set of graph set) to vector laplacian."""
     labels_vec_laplacian = []
     for graph_set in labels_set:

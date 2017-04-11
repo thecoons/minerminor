@@ -8,7 +8,7 @@ share/
 include/
 lab_script/
 pip-selfcheck.json
-script/base/*
+working_env/base*/
 local/
 
 
