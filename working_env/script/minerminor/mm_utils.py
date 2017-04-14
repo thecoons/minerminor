@@ -168,7 +168,7 @@ Gen : {0},\nNb_nd : {1},\nP-T_rk : {2},\nF_size : {3}, #F : {4}\n
                             len(learning_base),
                             str(t1-t0),
                             str(t2-t1)))
-                    f.write("{0}|{1}|{2}|{3}|{4}|{5}".format(generator.__name__,
+                    f.write("{0}|{1}|{2}|{3}|{4}|{5}\n".format(generator.__name__,
                                                              nb_nodes,
                                                              feature_size,
                                                              arr_ptree_rank,
