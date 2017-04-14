@@ -12,11 +12,12 @@ import os
 import argparse
 from sklearn.model_selection import ShuffleSplit
 
+
 parser = argparse.ArgumentParser(prog="P-Tree by DescTree classification")
 parser.add_argument("-r", "--representation", nargs='*',
-                    default=[mmr.learning_base_to_vec_adjacency_set,
-                             mmr.learning_base_to_vec_laplacian_set,
-                             mmr.learning_base_to_A3_minus_D])
+                    default=[mmr.adjacency,
+                             mmr.laplacian,
+                             mmr.A3_minus_D])
 parser.add_argument("-p", "--path", default="base_from_jaguar", nargs='*',
                     help="Path de la learning base")
 parser.add_argument("-t", "--title", default="Sans Titre",
@@ -39,6 +40,7 @@ for directory in os.listdir(args.path):
         # clf = svm.SVC()
         # clf = ensemble.RandomForestClassifier()
         # clf = neighbors.KNeighborsRegressor()
+
         clf = tree.DecisionTreeClassifier()
         title = "{0}_{1}".format(directory, representation.__name__)
         mmu.plot_learning_curve(clf, title, data_set, label_set, cv=cv, n_jobs=4)

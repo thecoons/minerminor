@@ -18,7 +18,8 @@ parser.add_argument("-r", "--representation", nargs='*',
                              mmr.A3_minus_D])
 parser.add_argument("-c", "--classifieur", nargs='*',
                     default=[tree.DecisionTreeClassifier,
-                             svm.SVC])
+                             svm.SVC,
+                             neighbors.nearest_centroid.NearestCentroid])
 parser.add_argument("-p", "--path", default="base_from_jaguar",
                     help="Path de la learning base")
 

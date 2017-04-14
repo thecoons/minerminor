@@ -22,20 +22,24 @@ def csv_to_dic(path_csv):
 def create_fmeasure_curve(dict_methodes):
     cycol = cycle(['r--', 'b-.', 'g:'])
     count = 1
-    plt.subplots_adjust(hspace=0.5)
+    plt.subplots_adjust(hspace=0.9)
     plt.figure(1)
     for key, value in dict_methodes.items():
-        plt.subplot(2, 1, count)
+        plt.subplot(len(dict_methodes), 1, count)
         arr_legend = []
         for key_, value_ in value.items():
-            t1 = [i for i, v in sorted(value_.items())]
-            t2 = [v for i, v in sorted(value_.items())]
+            od = {int(k): v for k, v in value_.items()}
+            t1 = [i for i, v in sorted(od.items())]
+            t2 = [v for i, v in sorted(od.items())]
             f_, = plt.plot(t1, t2, next(cycol), label=key_)
             arr_legend.append(f_)
             plt.axis([None, None, 0., 1.])
-            plt.xlabel('F-Measure')
-            plt.ylabel('Features Size')
+            plt.xlabel('Features Size')
+            plt.ylabel('F-Measure')
             plt.title(key)
-        plt.legend(handles=arr_legend)
         count += 1
+    plt.legend(loc=1, borderaxespad=-10., handles=arr_legend, fontsize='small')
+    # plt.legend(bbox_to_anchor=(1, 1), loc=1,
+    #            ncol=2, mode="expand", borderaxespad=0., handles=arr_legend)
+    # plt.legend(handles=arr_legend, loc='lower')
     plt.show()

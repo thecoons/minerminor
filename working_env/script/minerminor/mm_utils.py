@@ -1,6 +1,6 @@
 """Tools Box MinorMiner."""
 import networkx as nx
-import numpy as np
+# import numpy as np
 import json
 import matplotlib.pyplot as plt
 import os
@@ -9,7 +9,7 @@ import time
 import csv
 import datetime
 # from sklearn.model_selection import learning_curve
-from minerminor import mm_representation as mmr
+# from minerminor import mm_representation as mmr
 
 
 def count_iterable(i):
@@ -29,6 +29,13 @@ def show_graph(graph):
     pos = nx.nx_pydot.graphviz_layout(graph)
     nx.draw(graph, pos=pos)
     plt.show()
+
+
+def save_show_graph(graph, path):
+    """Show the graph."""
+    pos = nx.nx_pydot.graphviz_layout(graph)
+    nx.draw(graph, pos=pos)
+    plt.savefig(path)
 
 
 def fast_iso(graph, graph_set):
@@ -133,23 +140,24 @@ def learning(classifier, X_train, X_test, y_train, y_test):
 def experiment_generation(arr_generator, arr_nb_nodes, arr_ptree_rank,
                           arr_features_size, path_dir):
     """Experiment methode for base learning generation."""
-    for generator in arr_generator:
-        for nb_nodes in arr_nb_nodes:
-            for feature_size in arr_features_size:
-                t0 = time.time()
-                learning_base = generator(nb_nodes,
-                                          arr_ptree_rank,
-                                          feature_size)
-                t1 = time.time()
-                gen_norm = generator.__name__.replace("_", "-")
-                path = "{0}/{1}_{2}_{3}_{4}/".format(path_dir,
-                                                     gen_norm,
-                                                     nb_nodes,
-                                                     arr_ptree_rank,
-                                                     feature_size)
-                store_base(learning_base, path)
-                t2 = time.time()
-                print("""
+    with open("resultat_generation.txt", 'w') as f:
+        for generator in arr_generator:
+            for nb_nodes in arr_nb_nodes:
+                for feature_size in arr_features_size:
+                    t0 = time.time()
+                    learning_base = generator(nb_nodes,
+                                              arr_ptree_rank,
+                                              feature_size)
+                    t1 = time.time()
+                    gen_norm = generator.__name__.replace("_", "-")
+                    path = "{0}/{1}_{2}_{3}_{4}/".format(path_dir,
+                                                         gen_norm,
+                                                         nb_nodes,
+                                                         arr_ptree_rank,
+                                                         feature_size)
+                    store_base(learning_base, path)
+                    t2 = time.time()
+                    print("""
 ~~~~~~~~~
 Gen : {0},\nNb_nd : {1},\nP-T_rk : {2},\nF_size : {3}, #F : {4}\n
     => Time build : {5} sec, Time store : {6} sec
@@ -160,13 +168,14 @@ Gen : {0},\nNb_nd : {1},\nP-T_rk : {2},\nF_size : {3}, #F : {4}\n
                             len(learning_base),
                             str(t1-t0),
                             str(t2-t1)))
-                print("|{0}|{1}|{2}|{3}|{4}|".format(generator.__name__,
-                                                     nb_nodes,
-                                                     feature_size,
-                                                     arr_ptree_rank,
-                                                     str(t1-t0)))
-                # for i, ptree in enumerate(arr_ptree_rank):
-                #     show_graph(learning_base[i][0])
+                    f.write("{0}|{1}|{2}|{3}|{4}|{5}".format(generator.__name__,
+                                                             nb_nodes,
+                                                             feature_size,
+                                                             arr_ptree_rank,
+                                                             str(t1-t0),
+                                                             str(t2-t1)))
+                    # for i, ptree in enumerate(arr_ptree_rank):
+                    #     show_graph(learning_base[i][0])
 
 
 # def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
