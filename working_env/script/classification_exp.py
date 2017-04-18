@@ -10,6 +10,7 @@ from sklearn.metrics import precision_recall_fscore_support
 import os
 import argparse
 import datetime as dt
+from sklearn.externals import joblib
 
 parser = argparse.ArgumentParser(prog="Script de classification")
 parser.add_argument("-r", "--representation", nargs='*',
@@ -22,6 +23,7 @@ parser.add_argument("-c", "--classifieur", nargs='*',
                              neighbors.nearest_centroid.NearestCentroid])
 parser.add_argument("-p", "--path", default="base_from_jaguar",
                     help="Path de la learning base")
+parser.add_argument("-s", "--save", action='store_true', default=False, help="Save the classifieur")
 
 args = parser.parse_args()
 
@@ -51,12 +53,14 @@ for directory in os.listdir(args.path):
                                                                        pred,
                                                                        average="macro")
             to_save = "|{0}|{1}|{2}|{3}%|{4}|{5}|{6}|\n".format(directory.replace("_", "|"),
-                                                            classifieur.__name__,
-                                                            representation.__name__,
-                                                            miss,
-                                                            accu,
-                                                            recal,
-                                                            fmeasure)
+                                                                classifieur.__name__,
+                                                                representation.__name__,
+                                                                miss,
+                                                                accu,
+                                                                recal,
+                                                                fmeasure)
             print(directory, representation.__name__)
             print(to_save)
             resultat_file.write(to_save)
+            if args.save:
+                joblib.dump(clf, 'classifier/{0}_{1}_{2}.pkl'.format(classifieur, representation, len(label_set)))

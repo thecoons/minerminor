@@ -1,12 +1,12 @@
 """Test tree classification."""
-import networkx as nx
-import numpy as np
-from minerminor import mm_generator as mmg
+# import networkx as nx
+# import numpy as np
+# from minerminor import mm_generator as mmg
 from minerminor import mm_utils as mmu
 from minerminor import mm_representation as mmr
 from sklearn import ensemble, svm, neighbors, tree
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import precision_recall_fscore_support
+# from sklearn.model_selection import train_test_split
+# from sklearn.metrics import precision_recall_fscore_support
 import matplotlib.pyplot as plt
 import os
 import argparse
