@@ -63,4 +63,4 @@ for directory in os.listdir(args.path):
             print(to_save)
             resultat_file.write(to_save)
             if args.save:
-                joblib.dump(clf, 'classifier/{0}_{1}_{2}.pkl'.format(classifieur, representation, len(label_set)))
+                joblib.dump(clf, 'classifier/{0}_{1}_{2}.pkl'.format(classifieur.__name__, representation.__name__, len(label_set)))
