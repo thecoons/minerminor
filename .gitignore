@@ -10,7 +10,7 @@ lab_script/
 pip-selfcheck.json
 working_env/base*/
 local/
-
+working_env/classifier/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
