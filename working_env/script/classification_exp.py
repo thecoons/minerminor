@@ -5,6 +5,7 @@ from minerminor import mm_generator as mmg
 from minerminor import mm_utils as mmu
 from minerminor import mm_representation as mmr
 from sklearn import ensemble, svm, neighbors, tree
+from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_recall_fscore_support
 import os
@@ -18,9 +19,7 @@ parser.add_argument("-r", "--representation", nargs='*',
                              mmr.laplacian,
                              mmr.A3_minus_D])
 parser.add_argument("-c", "--classifieur", nargs='*',
-                    default=[tree.DecisionTreeClassifier,
-                             svm.SVC,
-                             neighbors.nearest_centroid.NearestCentroid])
+                    default=[tree.DecisionTreeClassifier, svm.SVC, MLPClassifier])
 parser.add_argument("-p", "--path", default="base_from_jaguar",
                     help="Path de la learning base")
 parser.add_argument("-s", "--save", action='store_true', default=False, help="Save the classifieur")
