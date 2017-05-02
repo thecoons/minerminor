@@ -118,3 +118,8 @@ def learning_base_pTree_generation(nb_nodes, arr_ptree_rank, feature_size):
             break
 
     return learning_base
+
+
+def learning_base_tw2():
+    """Generate TW2 learning base."""
+    pass

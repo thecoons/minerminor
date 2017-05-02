@@ -19,7 +19,7 @@ parser.add_argument("-r", "--representation", nargs='*',
                              mmr.laplacian,
                              mmr.A3_minus_D])
 parser.add_argument("-c", "--classifieur", nargs='*',
-                    default=[tree.DecisionTreeClassifier, svm.SVC, MLPClassifier])
+                    default=[svm.SVC])
 parser.add_argument("-p", "--path", default="base_from_jaguar",
                     help="Path de la learning base")
 parser.add_argument("-s", "--save", action='store_true', default=False, help="Save the classifieur")
@@ -44,7 +44,7 @@ for directory in os.listdir(args.path):
             # clf = svm.SVC()
             # clf = ensemble.RandomForestClassifier()
             # clf = neighbors.KNeighborsRegressor()
-            clf = classifieur()
+            clf = classifieur(kernel="poly")
 
             pred, miss = mmu.learning(clf, X_train, X_test, y_train, y_test)
 

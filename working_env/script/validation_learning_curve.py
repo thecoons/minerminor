@@ -5,6 +5,7 @@
 from minerminor import mm_utils as mmu
 from minerminor import mm_representation as mmr
 from sklearn import ensemble, svm, neighbors, tree
+from sklearn.neural_network import MLPClassifier
 # from sklearn.model_selection import train_test_split
 # from sklearn.metrics import precision_recall_fscore_support
 import matplotlib.pyplot as plt
@@ -18,7 +19,7 @@ parser.add_argument("-r", "--representation", nargs='*',
                     default=[mmr.adjacency,
                              mmr.laplacian,
                              mmr.A3_minus_D])
-parser.add_argument("-p", "--path", default="base_from_jaguar", nargs='*',
+parser.add_argument("-p", "--path", default="base_from_jaguar",
                     help="Path de la learning base")
 parser.add_argument("-t", "--title", default="Sans Titre",
                     help="Curve title")
@@ -41,7 +42,8 @@ for directory in os.listdir(args.path):
         # clf = ensemble.RandomForestClassifier()
         # clf = neighbors.KNeighborsRegressor()
 
-        clf = tree.DecisionTreeClassifier()
+        clf = MLPClassifier()
+        # clf = tree.DecisionTreeClassifier()
         title = "{0}_{1}".format(directory, representation.__name__)
         mmu.plot_learning_curve(clf, title, data_set, label_set, cv=cv, n_jobs=4)
         plt.savefig("learning_curve/{0}".format(title))

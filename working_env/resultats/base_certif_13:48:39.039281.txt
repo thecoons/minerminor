@@ -1,0 +1,9 @@
+|pTree-basic-cycle-generation|14|[0, 1]|1000|DecisionTreeClassifier|adjacency|18.5%|0.8157576368585543|0.8137019230769231|0.8142150586226808|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|DecisionTreeClassifier|laplacian|11.5%|0.8890513156568203|0.8860544217687075|0.8848589522164652|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|DecisionTreeClassifier|A3_minus_D|2.5%|0.9756892230576442|0.9746898759503801|0.974969337438362|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|SVC|adjacency|51.5%|0.5378378378378379|0.510537936571658|0.38979235166918447|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|SVC|laplacian|0.0%|1.0|1.0|1.0|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|SVC|A3_minus_D|0.0%|1.0|1.0|1.0|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|NearestCentroid|adjacency|47.5%|0.5297619047619048|0.5290726817042607|0.5235587652649264|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|NearestCentroid|laplacian|0.5%|0.9947368421052631|0.9952830188679245|0.9949848291080519|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|NearestCentroid|A3_minus_D|19.0%|0.8302951388888888|0.8048878205128205|0.805008210180624|

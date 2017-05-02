@@ -1,0 +1,3 @@
+|pTree-basic-cycle-generation|14|[0, 1]|1000|SVC|adjacency|53.0%|0.235|0.5|0.31972789115646255|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|SVC|laplacian|0.0%|1.0|1.0|1.0|
+|pTree-basic-cycle-generation|14|[0, 1]|1000|SVC|A3_minus_D|7.5%|0.9278846153846154|0.9324324324324325|0.9249080123150859|

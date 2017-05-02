@@ -1,6 +1,6 @@
 """Tools Box MinorMiner."""
 import networkx as nx
-# import numpy as np
+import numpy as np
 import json
 import matplotlib.pyplot as plt
 import os
@@ -8,7 +8,7 @@ from networkx.readwrite import json_graph
 import time
 import csv
 import datetime
-# from sklearn.model_selection import learning_curve
+from sklearn.model_selection import learning_curve
 # from minerminor import mm_representation as mmr
 
 
@@ -178,32 +178,32 @@ Gen : {0},\nNb_nd : {1},\nP-T_rk : {2},\nF_size : {3}, #F : {4}\n
                     #     show_graph(learning_base[i][0])
 
 
-# def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
-#                         n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):
-#     """learningCurve."""
-#     plt.figure()
-#     plt.title(title)
-#     if ylim is not None:
-#         plt.ylim(*ylim)
-#     plt.xlabel("Training examples")
-#     plt.ylabel("Score")
-#     train_sizes, train_scores, test_scores = learning_curve(
-#         estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
-#     train_scores_mean = np.mean(train_scores, axis=1)
-#     train_scores_std = np.std(train_scores, axis=1)
-#     test_scores_mean = np.mean(test_scores, axis=1)
-#     test_scores_std = np.std(test_scores, axis=1)
-#     plt.grid()
-#
-#     plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
-#                      train_scores_mean + train_scores_std, alpha=0.1,
-#                      color="r")
-#     plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
-#                      test_scores_mean + test_scores_std, alpha=0.1, color="g")
-#     plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
-#              label="Training score")
-#     plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
-#              label="Cross-validation score")
-#
-#     plt.legend(loc="best")
-#     return plt
+def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
+                        n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):
+    """learningCurve."""
+    plt.figure()
+    plt.title(title)
+    if ylim is not None:
+        plt.ylim(*ylim)
+    plt.xlabel("Training examples")
+    plt.ylabel("Score")
+    train_sizes, train_scores, test_scores = learning_curve(
+        estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
+    train_scores_mean = np.mean(train_scores, axis=1)
+    train_scores_std = np.std(train_scores, axis=1)
+    test_scores_mean = np.mean(test_scores, axis=1)
+    test_scores_std = np.std(test_scores, axis=1)
+    plt.grid()
+
+    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                     train_scores_mean + train_scores_std, alpha=0.1,
+                     color="r")
+    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,
+                     test_scores_mean + test_scores_std, alpha=0.1, color="g")
+    plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
+             label="Training score")
+    plt.plot(train_sizes, test_scores_mean, 'o-', color="g",
+             label="Cross-validation score")
+
+    plt.legend(loc="best")
+    return plt
