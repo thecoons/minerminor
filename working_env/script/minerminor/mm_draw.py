@@ -4,6 +4,21 @@ import collections as col
 import matplotlib.pyplot as plt
 from itertools import cycle
 import numpy as np
+import networkx as nx
+
+
+def show_graph(graph):
+    """Show the graph."""
+    pos = nx.nx_pydot.graphviz_layout(graph)
+    nx.draw(graph, pos=pos)
+    plt.show()
+
+
+def save_show_graph(graph, path):
+    """Show the graph."""
+    pos = nx.nx_pydot.graphviz_layout(graph)
+    nx.draw(graph, pos=pos)
+    plt.savefig(path)
 
 
 def csv_to_dic(path_csv):

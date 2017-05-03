@@ -24,20 +24,6 @@ def info_graph(graph):
     print(nx.laplacian_spectrum(graph))
 
 
-def show_graph(graph):
-    """Show the graph."""
-    pos = nx.nx_pydot.graphviz_layout(graph)
-    nx.draw(graph, pos=pos)
-    plt.show()
-
-
-def save_show_graph(graph, path):
-    """Show the graph."""
-    pos = nx.nx_pydot.graphviz_layout(graph)
-    nx.draw(graph, pos=pos)
-    plt.savefig(path)
-
-
 def fast_iso(graph, graph_set):
     """Fast iso test."""
     for g_test in graph_set:

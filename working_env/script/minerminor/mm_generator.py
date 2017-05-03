@@ -5,7 +5,9 @@ from networkx.readwrite import json_graph as js
 import random as rdm
 from progress_bar import InitBar as ib
 import math
-from minerminor import mm_utils as mmu
+import numpy as np
+import minerminor.mm_utils as mmu
+import minerminor.mm_draw as mmd
 
 
 def choice_first_node(graph):
@@ -120,6 +122,41 @@ def learning_base_pTree_generation(nb_nodes, arr_ptree_rank, feature_size):
     return learning_base
 
 
-def learning_base_tw2():
+def learning_base_tw2(nb_nodes, arr_tw_rank, feature_size):
     """Generate TW2 learning base."""
-    pass
+    learning_base = [[] for i in arr_tw_rank]
+    for count_rank, rank in enumerate(arr_tw_rank):
+        print("\nConstruction de la classe TW : {0}".format(rank))
+        pbar = ib()
+        for step in range(feature_size):
+            pbar((step/feature_size)*100)
+            is_good = True
+            while is_good:
+                G = nx.complete_graph(rank)
+                while len(G) != nb_nodes:
+                    node_focus = len(G)
+                    path = random_path(G, rank)
+                    G.add_node(node_focus)
+                    for i in path:
+                        G.add_edge(node_focus, i)
+                if not mmu.robust_iso(G, learning_base[count_rank]):
+                    is_good = False
+            # print(nx.chordal_graph_treewidth(G))
+            # mmd.show_graph(G)
+            learning_base[count_rank].append(G)
+
+    return learning_base
+
+
+def random_path(G, path_size):
+    """Return a random path of size n."""
+    res = []
+    arr_nodes = np.arange(0, len(G))
+    focus_node = rdm.choice(arr_nodes)
+    res.append(focus_node)
+    for i in range(path_size-1):
+        arr_neig = [i for i in G.neighbors(focus_node) if i not in res]
+        focus_node = rdm.choice(arr_neig)
+        res.append(focus_node)
+
+    return res
