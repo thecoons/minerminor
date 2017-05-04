@@ -133,19 +133,25 @@ def learning_base_tw2(nb_nodes, arr_tw_rank, feature_size):
             is_good = True
             while is_good:
                 G = nx.complete_graph(rank)
-                while len(G) != nb_nodes:
+                while len(G) < nb_nodes:
                     node_focus = len(G)
-                    path = random_path(G, rank)
+                    clique = random_clique(G, rank)
                     G.add_node(node_focus)
-                    for i in path:
+                    for i in clique:
                         G.add_edge(node_focus, i)
                 if not mmu.robust_iso(G, learning_base[count_rank]):
                     is_good = False
-            # print(nx.chordal_graph_treewidth(G))
-            # mmd.show_graph(G)
+            print("TW ==> "+str(nx.chordal_graph_treewidth(G)))
+            mmd.show_graph(G)
             learning_base[count_rank].append(G)
 
     return learning_base
+
+
+def random_clique(G, clique_rank):
+    """Return random clique of G."""
+    arr_clique = [i for i in nx.enumerate_all_cliques(G) if len(i) == clique_rank]
+    return rdm.choice(arr_clique)
 
 
 def random_path(G, path_size):

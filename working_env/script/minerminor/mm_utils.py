@@ -9,6 +9,7 @@ import time
 import csv
 import datetime
 from sklearn.model_selection import learning_curve
+import random as rdm
 # from minerminor import mm_representation as mmr
 
 
@@ -83,6 +84,29 @@ def load_base(label_set_name):
             labels_set.append(label_set)
 
     return labels_set
+
+
+def tw_split_base(base_path):
+    """Transform unebase {C1, C2, ... Cn} en {(C1uC2uCn-1),Cn}."""
+    old_learning_base = load_base(base_path)
+
+    if len(old_learning_base) < 2:
+        print("Base trop petit, au moins 2 classes")
+        return 0
+
+    learning_base = [[], old_learning_base[-1]]
+    nb_sample = int(len(old_learning_base[0])/len(old_learning_base[:-1]))
+    for feature in old_learning_base[:-1]:
+        learning_base[0] = list(set(learning_base[0]) | set(rdm.sample(feature,nb_sample)))
+
+    for i in range(len(learning_base[1])-len(learning_base[0])):
+        rdm_len_feature = rdm.randint(0,len(old_learning_base[:-1])-1)
+        rdm_len_feature_size = rdm.randint(0,len(old_learning_base[0])-1)
+        print(rdm_len_feature, rdm_len_feature_size)
+        learning_base[0].append(old_learning_base[rdm_len_feature][rdm_len_feature_size])
+
+    return learning_base
+
 
 
 def exp_to_csv(generator, nb_nodes, feature_size, ptree_rank, time_exe):
