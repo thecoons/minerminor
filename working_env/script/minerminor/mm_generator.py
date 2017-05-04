@@ -141,8 +141,8 @@ def learning_base_tw2(nb_nodes, arr_tw_rank, feature_size):
                         G.add_edge(node_focus, i)
                 if not mmu.robust_iso(G, learning_base[count_rank]):
                     is_good = False
-            print("TW ==> "+str(nx.chordal_graph_treewidth(G)))
-            mmd.show_graph(G)
+            # print("TW ==> "+str(nx.chordal_graph_treewidth(G)))
+            # mmd.show_graph(G)
             learning_base[count_rank].append(G)
 
     return learning_base
