@@ -7,7 +7,10 @@ from minerminor import mm_representation as mmr
 from sklearn import ensemble, svm, neighbors, tree
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import average_precision_score
 from sklearn.metrics import precision_recall_fscore_support
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics import confusion_matrix
 import os
 import argparse
 import datetime as dt
@@ -33,31 +36,28 @@ for directory in os.listdir(args.path):
         for representation in args.representation:
             learning_base = mmu.load_base("{0}/{1}".format(args.path, directory))
             learning_base = representation(learning_base)
-            # learning_base = mmr.labels_set_to_vec_laplacian_set(learning_base)
-            # learning_base = mmr.labels_set_to_vec_adjacency_set(learning_base)
-            # learning_base = mmr.learning_base_to_A3_minus_D(learning_base)
 
             data_set, label_set = mmu.create_sample_label_classification(learning_base)
-
             X_train, X_test, y_train, y_test = train_test_split(data_set, label_set,
-                                                                test_size=0.1)
-            # clf = svm.SVC()
-            # clf = ensemble.RandomForestClassifier()
-            # clf = neighbors.KNeighborsRegressor()
+                                                                test_size=0.2)
             clf = classifieur()
 
-            pred, miss = mmu.learning(clf, X_train, X_test, y_train, y_test)
+            pred, miss, clf = mmu.learning(clf, X_train, X_test, y_train, y_test)
+
+            score = cross_val_score(clf, X_test, y_test, cv=10)
+            mat_conf = confusion_matrix(y_test, pred)
 
             accu, recal, fmeasure, _ = precision_recall_fscore_support(y_test,
-                                                                       pred,
-                                                                       average="macro")
-            to_save = "|{0}|{1}|{2}|{3}%|{4}|{5}|{6}|\n".format(directory.replace("_", "|"),
-                                                                classifieur.__name__,
-                                                                representation.__name__,
-                                                                miss,
-                                                                accu,
-                                                                recal,
-                                                                fmeasure)
+                                                                       pred, average='macro')
+            to_save = "{0}|{1}|{2}|{3}%|{4}|{5}|{6}|{7}|{8}\n".format(directory.replace("_", "|"),
+                                                                        classifieur.__name__,
+                                                                        representation.__name__,
+                                                                        miss,
+                                                                        score.mean(),
+                                                                        recal,
+                                                                        fmeasure,
+                                                                        mat_conf.tolist(),
+                                                                        score.tolist())
             print(directory, representation.__name__)
             print(to_save)
             resultat_file.write(to_save)

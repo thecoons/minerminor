@@ -8,6 +8,7 @@ import math
 import numpy as np
 import minerminor.mm_utils as mmu
 import minerminor.mm_draw as mmd
+import planarity as pl
 
 
 def choice_first_node(graph):
@@ -147,6 +148,76 @@ def learning_base_tw2(nb_nodes, arr_tw_rank, feature_size):
 
     return learning_base
 
+
+def learning_base_planar(nb_nodes, arr_planar_rank, feature_size):
+    """Generate Planar base."""
+    learning_base = [[] for i in arr_planar_rank]
+    print("\nConstruction de la classe Planar")
+    pbar = ib()
+    for step in range(feature_size):
+        pbar((step/feature_size)*100)
+        is_good = True
+        while is_good:
+            G, H = generate_planar_deg(nb_nodes, step % 2)
+            if not mmu.robust_iso(G, learning_base[0]) and not mmu.robust_iso(H, learning_base[1]):
+                is_good = False
+        learning_base[0].append(G)
+        learning_base[1].append(H)
+
+    return learning_base
+
+
+def learning_base_rdm(nb_nodes, _, feature_size):
+    """Generate 0-p/k-p."""
+    learning_base = [[], []]
+    print("\nConstruction de la base test 0-P/k-P")
+    learning_base[0] = rdm.sample(list(nx.nonisomorphic_trees(nb_nodes)), feature_size)
+    # mmd.show_graph(learning_base[0][0])
+    learning_base[1] = agreg_tree(rdm.sample(list(nx.nonisomorphic_trees(nb_nodes)), feature_size), nb_nodes, feature_size)
+
+    return learning_base
+
+
+def agreg_tree(arr, nb_nodes, feature_size):
+    """Agreg tree."""
+    min_ = nb_nodes - 1
+    max_ = int((nb_nodes * min_) / 2)
+    pbar = ib()
+
+    for count, tree in enumerate(arr):
+        pbar((count/feature_size)*100)
+        rdm_edges_int = rdm.randint(1, max_ - len(tree.edges()))
+        print("!!!! {0}".format(rdm_edges_int))
+        for i in range(rdm_edges_int):
+            # import ipdb; ipdb.set_trace()
+            edge = rdm.choice(nx.complement(tree).edges())
+            print(edge)
+            tree.add_edge(*edge)
+
+    return arr
+
+def generate_planar_deg(nb_nodes, side_start):
+    """Private method for planar generation."""
+    if side_start % 2 == 0:
+        G = rdm.choice(list(nx.nonisomorphic_trees(nb_nodes)))
+        edges_action = G.add_edge
+        set_choice = nx.non_edges
+    else:
+        G = nx.complete_graph(nb_nodes)
+        edges_action = G.remove_edge
+        set_choice = nx.edges
+    is_good = True
+    while(is_good):
+        H = G.copy()
+        edges_choice = rdm.choice(list(set_choice(G)))
+        edges_action(edges_choice[0], edges_choice[1])
+        if((side_start%2 == 0 and not pl.is_planar(G) or (side_start%2 == 1 and pl.is_planar(G)))):
+            is_good = False
+
+    if side_start % 2 == 0:
+        return H, G
+    else:
+        return G, H
 
 def random_clique(G, clique_rank):
     """Return random clique of G."""

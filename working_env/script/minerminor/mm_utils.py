@@ -41,6 +41,19 @@ def robust_iso(graph, graph_set):
     return False
 
 
+def graph_sampling(graph, rank_sub):
+    """Graph sub sampling."""
+    res = [rdm.choice(graph.nodes())]
+    for i in range(rank_sub - 1):
+        seed = []
+        for j in res:
+            seed += [k for k in nx.all_neighbors(graph, j)]
+        seed = [l for l in list(set(seed)) if l not in res]
+        res.append(rdm.choice(seed))
+
+    return nx.subgraph(graph, res)
+
+
 def graph_set_to_json(graph_set):
     """Convert graph set to json set."""
     json_set = []
@@ -139,12 +152,12 @@ def extract_miss_class(y_test, y_pred):
 def learning(classifier, X_train, X_test, y_train, y_test):
     """Learning and Predict function."""
     y_pred = classifier.fit(X_train, y_train).predict(X_test)
-    miss = (y_test != y_pred).sum()
+    success = (y_test == y_pred).sum()
     total = len(X_test)
-    print("Number of mislabeled on a total %d : %d (%d %%)" % (
-        total, miss, (miss/total)*100))
+    print("Number of labeled on a total %d : %d (%d %%)" % (
+        total, success, (success/total)*100))
 
-    return y_pred, (miss/total)*100
+    return y_pred, (success/total)*100, classifier
 
 
 def experiment_generation(arr_generator, arr_nb_nodes, arr_ptree_rank,
