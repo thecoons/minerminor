@@ -149,6 +149,53 @@ def learning_base_tw2(nb_nodes, arr_tw_rank, feature_size):
     return learning_base
 
 
+def learning_base_planar_by_minor_agreg(nb_nodes, feature_size, minor):
+    """Learning base planar by clique agreg."""
+    learning_base = [[], []]
+    print("\nConstruction de la classe planar")
+    pbar = ib()
+    for step in range(feature_size):
+        pbar((step/feature_size)*100)
+        # Construction de P
+
+        # Generation minor degradé
+        G = nx.Graph(minor)
+        edge = rdm.choice(G.edges())
+        G.remove_edge(*edge)
+        is_good = True
+        while is_good:
+            G_ = nx.Graph(G)
+            G_.add_node(len(G_))
+
+            edge = rdm.choice(list(G.edges()))
+            G_.add_edge(len(G_) - 1, edge[0])
+            G_.add_edge(len(G_) - 1, edge[1])
+
+            if pl.is_planar(G_):
+                G = nx.Graph(G_)
+                if len(G) == nb_nodes:
+                    is_good = False
+        learning_base[0].append(G)
+
+        G = nx.Graph(minor)
+        is_good = True
+        while is_good:
+            G_ = nx.Graph(G)
+            G_.add_node(len(G_))
+
+            edge = rdm.choice(list(G.edges()))
+            G_.add_edge(len(G_) - 1, edge[0])
+            G_.add_edge(len(G_) - 1, edge[1])
+
+            if not pl.is_planar(G_):
+                G = nx.Graph(G_)
+                if len(G) == nb_nodes:
+                    is_good = False
+        learning_base[1].append(G)
+
+    return learning_base
+
+
 def learning_base_planar(nb_nodes, arr_planar_rank, feature_size):
     """Generate Planar base."""
     learning_base = [[] for i in arr_planar_rank]
@@ -187,14 +234,13 @@ def agreg_tree(arr, nb_nodes, feature_size):
     for count, tree in enumerate(arr):
         pbar((count/feature_size)*100)
         rdm_edges_int = rdm.randint(1, max_ - len(tree.edges()))
-        print("!!!! {0}".format(rdm_edges_int))
         for i in range(rdm_edges_int):
             # import ipdb; ipdb.set_trace()
             edge = rdm.choice(nx.complement(tree).edges())
-            print(edge)
             tree.add_edge(*edge)
 
     return arr
+
 
 def generate_planar_deg(nb_nodes, side_start):
     """Private method for planar generation."""
@@ -211,13 +257,14 @@ def generate_planar_deg(nb_nodes, side_start):
         H = G.copy()
         edges_choice = rdm.choice(list(set_choice(G)))
         edges_action(edges_choice[0], edges_choice[1])
-        if((side_start%2 == 0 and not pl.is_planar(G) or (side_start%2 == 1 and pl.is_planar(G)))):
+        if((side_start % 2 == 0 and not pl.is_planar(G) or (side_start % 2 == 1 and pl.is_planar(G)))):
             is_good = False
 
     if side_start % 2 == 0:
         return H, G
     else:
         return G, H
+
 
 def random_clique(G, clique_rank):
     """Return random clique of G."""
