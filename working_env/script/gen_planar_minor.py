@@ -20,19 +20,19 @@ if not os.path.exists("base_planar_k5k33"):
 
 K5 = nx.complete_graph(5)
 K33 = nx.complete_bipartite_graph(3, 3)
-lb = mmg.learning_base_planar_by_minor_agreg(15, 1000, K33)
-lb2 = mmg.learning_base_planar_by_minor_agreg(15, 1000, K5)
+lb = mmg.learning_base_planar_by_minor_agreg(15, 10000, K33)
+lb2 = mmg.learning_base_planar_by_minor_agreg(15, 10000, K5)
 
 lb3 = [[], []]
 
-lb3[0].extend(rdm.sample(lb[0], 500))
-lb3[0].extend(rdm.sample(lb2[0], 500))
+lb3[0].extend(rdm.sample(lb[0], 5000))
+lb3[0].extend(rdm.sample(lb2[0], 5000))
 
-lb3[1].extend(rdm.sample(lb[1], 500))
-lb3[1].extend(rdm.sample(lb2[1], 500))
+lb3[1].extend(rdm.sample(lb[1], 5000))
+lb3[1].extend(rdm.sample(lb2[1], 5000))
 
-mmu.store_base(lb, "base_planar_k33/learning-planar-minor_15_[0,1]_1000")
-mmu.store_base(lb2, "base_planar_k5/learning-planar-minor_15_[0,1]_1000")
-mmu.store_base(lb3, "base_planar_k5k33/learning-planar-minor_15_[0,1]_1000")
+mmu.store_base(lb, "base_planar_k33/learning-planar-minor_15_[0,1]_10000")
+mmu.store_base(lb2, "base_planar_k5/learning-planar-minor_15_[0,1]_10000")
+mmu.store_base(lb3, "base_planar_k5k33/learning-planar-minor_15_[0,1]_10000")
 # mmd.show_graph(lb[0][1])
 # mmd.show_graph(lb[1][1])
