@@ -53,14 +53,14 @@ for directory in os.listdir(args.path):
             accu, recal, fmeasure, _ = precision_recall_fscore_support(y_test,
                                                                        pred, average='macro')
             to_save = "{0}|{1}|{2}|{3}%|{4}|{5}|{6}|{7}|{8}\n".format(directory.replace("_", "|"),
-                                                                        classifieur.__name__,
-                                                                        representation.__name__,
-                                                                        miss,
-                                                                        score.mean(),
-                                                                        recal,
-                                                                        fmeasure,
-                                                                        mat_conf.tolist(),
-                                                                        score.tolist())
+                                                                      classifieur.__name__,
+                                                                      representation.__name__,
+                                                                      miss,
+                                                                      score.mean(),
+                                                                      recal,
+                                                                      fmeasure,
+                                                                      mat_conf.tolist(),
+                                                                      score.tolist())
             print(directory, representation.__name__)
             print(to_save)
             resultat_file.write(to_save)

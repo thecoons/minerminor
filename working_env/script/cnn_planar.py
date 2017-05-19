@@ -14,7 +14,7 @@ import keras
 # hyperparameters
 batch_size = 128
 num_classes = 2
-epochs = 12
+epochs = 15
 
 # input graph dimensions
 graph_dim = 15
@@ -25,7 +25,8 @@ learning_base = mmu.load_base("base_planar_k5k33/learning-planar-minor_15_[0,1]_
 # representation
 for count_classe, classe in enumerate(learning_base):
     for count_graph, graph in enumerate(classe):
-        learning_base[count_classe][count_graph] = nx.laplacian_matrix(graph).toarray()
+        rep = mmr.mat_to_PCA(nx.laplacian_matrix(graph).toarray())
+        learning_base[count_classe][count_graph] = rep
 
 # datarows formating
 # -- extract from learning base et format it
@@ -38,10 +39,12 @@ x_train = x_train.reshape(x_train.shape[0], graph_dim, graph_dim, 1)
 x_test = x_test.reshape(x_test.shape[0], graph_dim, graph_dim, 1)
 # -- declaration input_shape
 input_shape = (graph_dim, graph_dim, 1)
+
 # convert class vectors to binary class matrices
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
+# model architecture
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
@@ -54,15 +57,18 @@ model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
+# model configuration
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
 
+# model fitting
 model.fit(x_train, y_train,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
           validation_data=(x_test, y_test))
+
 score = model.evaluate(x_test, y_test, verbose=1)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])

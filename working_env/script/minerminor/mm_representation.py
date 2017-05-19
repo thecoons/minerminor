@@ -2,6 +2,7 @@
 import numpy as np
 import networkx as nx
 import math
+from sklearn import decomposition
 
 
 def vec_to_graph(vec):
@@ -54,6 +55,22 @@ def graph_to_vec_laplacian(graph):
     mat = nx.laplacian_matrix(graph).toarray()
 
     return np.squeeze(np.asarray(mat.reshape(-1)))
+
+
+def mat_to_PCA(matrice):
+    """Convert to PCA."""
+    pca = decomposition.PCA(n_components=len(matrice[0]))
+    return pca.fit_transform(matrice)
+    # cov = np.cov(matrice.T)
+    # ev, eig = np.linalg.eig(cov)
+    #
+    # return eig.dot(matrice.T)
+
+
+def mat_to_FP(matrice):
+    """Convert to FP."""
+    q, r = np.linalg.qr(matrice)
+    return r
 
 
 def graph_set_to_vec_adjacency_set(graph_set):
