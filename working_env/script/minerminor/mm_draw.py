@@ -117,8 +117,8 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
     test_scores_std = np.std(test_scores, axis=1)
     plt.grid()
 
-    print(len(X))
-    print(train_sizes, train_scores_mean)
+    # print(len(X))
+    # print(train_sizes, train_scores_mean)
 
     plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
                      train_scores_mean + train_scores_std, alpha=0.1,
