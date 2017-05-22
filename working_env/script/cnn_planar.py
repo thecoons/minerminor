@@ -14,13 +14,13 @@ import keras
 # hyperparameters
 batch_size = 128
 num_classes = 2
-epochs = 15
+epochs = 300
 
 # input graph dimensions
 graph_dim = 15
 
 # load data
-learning_base = mmu.load_base("base_planar_k5k33/learning-planar-minor_15_[0,1]_10000")
+learning_base = mmu.load_base("base_planar_cnn/learning-base-planar_15_[0, 1]_10000")
 
 # representation
 for count_classe, classe in enumerate(learning_base):
@@ -70,5 +70,5 @@ model.fit(x_train, y_train,
           validation_data=(x_test, y_test))
 
 score = model.evaluate(x_test, y_test, verbose=1)
-print('Test loss:', score[0])
+print('\nTest loss:', score[0])
 print('Test accuracy:', score[1])

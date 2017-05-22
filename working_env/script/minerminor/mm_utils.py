@@ -10,7 +10,26 @@ import csv
 import datetime
 from sklearn.model_selection import learning_curve
 import random as rdm
+from keras.models import Sequential
+from keras.layers import Lambda, Conv2D, MaxPooling2D, Dropout, Dense, Flatten
 # from minerminor import mm_representation as mmr
+
+
+def cnn_model_alpha(input_shape):
+    """Model v0.1."""
+    model = Sequential()
+    model.add(Lambda(lambda x: x/127.5-1.0, input_shape=input_shape))
+    model.add(Conv2D(24, 5, 5, activation='elu', subsample=(2, 2)))
+    model.add(Conv2D(36, 5, 5, activation='elu'))
+    model.add(Dropout(0.5))
+    model.add(Flatten())
+    model.add(Dense(100, activation='elu'))
+    model.add(Dense(50, activation='elu'))
+    model.add(Dense(10, activation='elu'))
+    model.add(Dense(2, activation='softmax'))
+    model.summary()
+
+    return model
 
 
 def count_iterable(i):
