@@ -67,10 +67,16 @@ def mat_to_PCA(matrice):
     # return eig.dot(matrice.T)
 
 
-def mat_to_FP(matrice):
+def mat_to_FP_r(matrice):
     """Convert to FP."""
     q, r = np.linalg.qr(matrice)
     return r
+
+
+def mat_to_FP_q(matrice):
+    """Convert to Q."""
+    q, r = np.linalg.qr(matrice)
+    return q
 
 
 def graph_set_to_vec_adjacency_set(graph_set):
