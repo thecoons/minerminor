@@ -5,14 +5,14 @@ from minerminor import mm_draw as mmd
 from sklearn.model_selection import train_test_split
 import os
 from os.path import isfile, join
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.metrics import confusion_matrix
 
 # Path to classifier to test
 mypath = "classifier/class_test"
 # Base to use for testing
 base_path = "base_rdm_kp"
-representation = [mmr.adjacency, mmr.laplacian, mmr.A3_minus_D]
+representation = [mmr.adjacency, mmr.laplacian]
 res = {}
 resultat_file = open("resultats/"+base_path+"_testing.txt", "w")
 resultat_file.write("Base|Representation|Score|Mat_conf|Vecteur_res\n")
@@ -38,19 +38,24 @@ for clf_file in [f for f in os.listdir(mypath) if isfile(join(mypath, f))]:
             y_pred = clf.predict(data_set)
             classified = (label_set == y_pred).sum()
             total = len(y_pred)
-
+            print(len(y_pred))
             score = cross_val_score(clf, data_set, label_set, cv=10)
             mat_conf = confusion_matrix(label_set, y_pred)
+
+            y_pred = cross_val_predict(clf, data_set, label_set, cv=4)
+            print(len(y_pred))
+            mat_conf_aug = confusion_matrix(label_set, y_pred)
 
             # print("Number of mislabeled on a total %d : %d (%d %%)" % (
             #     total, miss, (miss/total)*100))
             res[arr_info_clf[0]][int(arr_class[1])] = classified
-            resultat_file.write("{0}|{1}|{2}|{3}|{4}|{5}\n".format(base_dir,
+            resultat_file.write("{0}|{1}|{2}|{3}|{4}|{5}|{6}\n".format(base_dir,
                                                              rep.__name__,
-                                                             clf.split("(")[0],
+                                                             clf,
                                                              score.mean(),
                                                              mat_conf.tolist(),
-                                                             score.tolist()))
+                                                             score.tolist(),
+                                                             mat_conf_aug.tolist()))
 print(res)
 # mmd.create_curve_xP(res)
 # générer la data
