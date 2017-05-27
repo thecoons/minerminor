@@ -5,6 +5,18 @@ import math
 from sklearn import decomposition
 
 
+def learning_base_to_rep(learning_base, arr_rep):
+    for count_classe, classe in enumerate(learning_base):
+        for count_graph, graph in enumerate(classe):
+            tmp = graph
+            for fun in arr_rep:
+                tmp = fun(tmp)
+            # rep = rep_2(rep_1(graph))
+            learning_base[count_classe][count_graph] = tmp
+
+    return learning_base
+
+
 def vec_to_graph(vec):
     """Vector to graph."""
     root = int(round(math.sqrt(len(vec))))

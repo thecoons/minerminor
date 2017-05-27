@@ -58,14 +58,16 @@ def cnn_model_test():
 
 
 # hyperparameters
+save = True
 batch_size = 128
 num_classes = 2
 epochs = 200
 title = "model_test"
-base_path = "base_planar_cnn/learning-base-planar_15_[0, 1]_10000"
+base_path = "bases/base_planar_k5k33/learning-planar-minor_15_[0,1]_1000"
 graph_dim = 15
 early_stopping = EarlyStopping(monitor='val_loss', patience=20)
-
+rep_1 = lambda x: nx.laplacian_matrix(x).toarray()
+rep_2 = lambda x: mmr.mat_to_PCA(x)
 # -- declaration input_shape (lis en global par la fonction de creation model... pas beau !)
 input_shape = (graph_dim, graph_dim, 1)
 
@@ -73,21 +75,17 @@ input_shape = (graph_dim, graph_dim, 1)
 learning_base = mmu.load_base(base_path)
 
 # representation
-for count_classe, classe in enumerate(learning_base):
-    for count_graph, graph in enumerate(classe):
-        rep = mmr.mat_to_PCA(nx.laplacian_matrix(graph).toarray())
-        learning_base[count_classe][count_graph] = rep
+learning_base = mmr.learning_base_to_rep(learning_base, [rep_1, rep_2])
 
 # datarows formating
 # -- extract from learning base et format it
 data_set, label_set = mmu.create_sample_label_classification(learning_base)
+# --reshape for cnn
+data_set = np.array(data_set)
+data_set = data_set.reshape(data_set.shape[0], graph_dim, graph_dim, 1)
 x_train, x_test, y_train, y_test = train_test_split(data_set, label_set, test_size=0.2)
 # -- list to np.array
 x_train, x_test, y_train, y_test = [np.array(i) for i in [x_train, x_test, y_train, y_test]]
-# -- reshape as tensorflow 'channels_last' input
-x_train = x_train.reshape(x_train.shape[0], graph_dim, graph_dim, 1)
-x_test = x_test.reshape(x_test.shape[0], graph_dim, graph_dim, 1)
-
 
 # convert class vectors to binary class matrices
 y_train = keras.utils.to_categorical(y_train, num_classes)
@@ -102,6 +100,9 @@ history = model.fit(x_train, y_train,
                     epochs=epochs, batch_size=batch_size, verbose=1,
                     validation_data=(x_test, y_test),
                     callbacks=[early_stopping])
+
+if save:
+    model.save('classifier/'+title+'.h5')
 
 # Visualisation
 # plot_model(model, to_file='resultats/curve_pool/model_schema.png')
