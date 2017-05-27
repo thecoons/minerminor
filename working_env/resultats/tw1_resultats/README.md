@@ -1,6 +1,6 @@
 # Résultats
 
-## base_descri
+## base_biaisé -> base_biaisé
 
 |       | Adjacency | Laplacien |
 |-------|-----------|-----------|
@@ -8,7 +8,7 @@
 | SVM   |  52.0%    |   100%    |
 | MLP   |  99.25%   |   99.75%  |
 
-# base_rdm
+# base_rdm -> base_rdm
 
 |       | Adjacency | Laplacien |
 |-------|-----------|-----------|
@@ -16,7 +16,7 @@
 | SVM   |  96.25%   |  98.5%    |
 | MLP   |  98.0%    |  98.5%    |
 
-# base_descri + base_rdm
+# base_biaisé | base_rdm + base_rdm  
 
 |       | Adjacency | Laplacien |
 |-------|-----------|-----------|
@@ -26,7 +26,7 @@
 
 # Matrices de Confusion
 
-# base_descri
+# base_biaisé -> base_biaisé
 
 |       |          Adjacency       |       Laplacien        |
 |-------|--------------------------|------------------------|
@@ -34,7 +34,7 @@
 | SVM   |  [[127, 86], [106, 81]]  | [[197, 0], [0, 203]]   |
 | MLP   |  [[189, 2], [1, 208]]    | [[195, 0], [6, 199]]   |
 
-# base_rdm
+# base_rdm -> base_rdm
 
 |       |          Adjacency       |       Laplacien        |
 |-------|--------------------------|------------------------|
@@ -42,7 +42,7 @@
 | SVM   |  [[205, 0], [15, 180]]   | [[209, 0], [6, 185]]   |
 | MLP   |  [[192, 1], [7, 200]]    | [[195, 0], [6, 199]]   |
 
-# base_descri + base_rdm
+# base_biaisé | base_rdm + base_rdm
 
 |       |          Adjacency       |       Laplacien        |
 |-------|--------------------------|------------------------|
