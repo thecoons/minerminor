@@ -15,6 +15,7 @@ import networkx as nx
 import numpy as np
 import keras
 from keras.callbacks import EarlyStopping
+import os
 
 
 def cnn_model_alpha():
@@ -58,16 +59,18 @@ def cnn_model_test():
 
 
 # hyperparameters
+init_model = cnn_model_test
 save = True
 batch_size = 128
 num_classes = 2
 epochs = 200
-title = "model_test"
-base_path = "bases/base_planar_k5k33/learning-planar-minor_15_[0,1]_1000"
-graph_dim = 15
+title = "model_cnn_test"
+base_path = "bases/base_validation/pTree-basic-cycle-generation_14_[0, 1]_1000"
+graph_dim = 14
 early_stopping = EarlyStopping(monitor='val_loss', patience=20)
 rep_1 = lambda x: nx.laplacian_matrix(x).toarray()
 rep_2 = lambda x: mmr.mat_to_PCA(x)
+rep_arr = [rep_1]
 # -- declaration input_shape (lis en global par la fonction de creation model... pas beau !)
 input_shape = (graph_dim, graph_dim, 1)
 
@@ -75,7 +78,7 @@ input_shape = (graph_dim, graph_dim, 1)
 learning_base = mmu.load_base(base_path)
 
 # representation
-learning_base = mmr.learning_base_to_rep(learning_base, [rep_1, rep_2])
+learning_base = mmr.learning_base_to_rep(learning_base, rep_arr)
 
 # datarows formating
 # -- extract from learning base et format it
@@ -92,7 +95,7 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 # model init
-model = cnn_model_test()
+model = init_model()
 # model = KerasClassifier(build_fn=model_init, epochs=epochs, batch_size=batch_size, verbose=0)
 
 # model fitting
@@ -100,6 +103,9 @@ history = model.fit(x_train, y_train,
                     epochs=epochs, batch_size=batch_size, verbose=1,
                     validation_data=(x_test, y_test),
                     callbacks=[early_stopping])
+
+if not os.path.exists('resultats/'+title):
+    os.makedirs('resultats/'+title)
 
 if save:
     model.save('classifier/'+title+'.h5')

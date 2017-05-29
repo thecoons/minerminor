@@ -35,6 +35,33 @@ def tree_to_1tree(graph):
     return graph
 
 
+def certf_tw2(graph):
+    """Certif pour TW2 production."""
+    finish = True
+    G = nx.Graph(graph)
+    while finish:
+        currt_node = None
+        currt_node_sec = None
+        dic_degree = nx.degree(G)
+
+        if 1 in dic_degree.values():
+            currt_node = rdm.choice([i for i in dic_degree if dic_degree[i] == 1])
+            currt_node_sec = rdm.choice(list(nx.all_neighbors(G, currt_node)))
+
+        elif 2 in dic_degree.values():
+            currt_node = rdm.choice([i for i in dic_degree if dic_degree[i] == 2])
+            currt_node_sec = rdm.choice(list(nx.all_neighbors(G, currt_node)))
+        else:
+            finish = False
+
+        if finish:
+            G_ = nx.contracted_edge(G, (currt_node, currt_node_sec), self_loops=False)
+            G = nx.Graph(G_)
+
+    return True if len(G) == 1 else False
+
+
+
 def learning_base_T21T_generation(rank):
     """Generate T21T learning base with nonisomorphic tree for a given rank."""
     data_set = nx.nonisomorphic_trees(rank, create="graph")
@@ -225,15 +252,34 @@ def learning_base_rdm(nb_nodes, _, feature_size):
     return learning_base
 
 
+def learning_base_rdm_tw2(nb_nodes, _, feature_size):
+    """Generate rdm base TW2."""
+    learning_base = [[], []]
+    tree_noniso_list = list(nx.nonisomorphic_trees(nb_nodes))
+    print("\nConstruction de la base rdm TW2")
+    pbar = ib()
+    while len(learning_base[0]) < feature_size or len(learning_base[1]) < feature_size:
+        graph = agreg_tree([rdm.choice(tree_noniso_list)], nb_nodes, feature_size)[0]
+        # print(len(tree_noniso_list))
+        if certf_tw2(graph):
+            if len(learning_base[0]) < feature_size:
+                learning_base[0].append(graph)
+        else:
+            if len(learning_base[1]) < feature_size:
+                learning_base[1].append(graph)
+        pbar(((len(learning_base[0])+len(learning_base[1]))/(feature_size*2))*100)
+
+    return learning_base
+        # mmd.show_graph(graph)
+
+
 def agreg_tree(arr, nb_nodes, feature_size):
     """Agreg tree."""
     min_ = nb_nodes - 1
     max_ = int((nb_nodes * min_) / 2)
-    pbar = ib()
 
     for count, tree in enumerate(arr):
-        pbar((count/feature_size)*100)
-        rdm_edges_int = rdm.randint(1, max_ - len(tree.edges()))
+        rdm_edges_int = rdm.randint(0, max_ - len(tree.edges()))
         for i in range(rdm_edges_int):
             # import ipdb; ipdb.set_trace()
             edge = rdm.choice(nx.complement(tree).edges())
