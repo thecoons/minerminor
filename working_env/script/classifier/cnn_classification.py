@@ -64,10 +64,11 @@ save = True
 batch_size = 128
 num_classes = 2
 epochs = 200
-title = "model_cnn_test"
-base_path = "bases/base_validation/pTree-basic-cycle-generation_14_[0, 1]_1000"
-graph_dim = 14
+title = "clf_cnn_planar_rdm_lapla"
+base_path = "bases/base_planar/learning-base-planar_18_[0, 1]_1000"
+graph_dim = 18
 early_stopping = EarlyStopping(monitor='val_loss', patience=20)
+# rep_1 = lambda x: nx.to_numpy_matrix(x)
 rep_1 = lambda x: nx.laplacian_matrix(x).toarray()
 rep_2 = lambda x: mmr.mat_to_PCA(x)
 rep_arr = [rep_1]

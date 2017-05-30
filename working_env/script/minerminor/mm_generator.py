@@ -10,7 +10,6 @@ import minerminor.mm_utils as mmu
 import minerminor.mm_draw as mmd
 import planarity as pl
 
-
 def choice_first_node(graph):
     """Pick up a node which can form a cycle and a list for the seconde one."""
     node = rdm.choice(graph.nodes())
@@ -176,7 +175,7 @@ def learning_base_tw2(nb_nodes, arr_tw_rank, feature_size):
     return learning_base
 
 
-def learning_base_planar_by_minor_agreg(nb_nodes, feature_size, minor):
+def learning_base_planar_by_minor_agreg(nb_nodes, _, feature_size, minor):
     """Learning base planar by clique agreg."""
     learning_base = [[], []]
     print("\nConstruction de la classe planar")
@@ -255,6 +254,7 @@ def learning_base_rdm(nb_nodes, _, feature_size):
 def learning_base_rdm_tw2(nb_nodes, _, feature_size):
     """Generate rdm base TW2."""
     learning_base = [[], []]
+    tmp = 0
     tree_noniso_list = list(nx.nonisomorphic_trees(nb_nodes))
     print("\nConstruction de la base rdm TW2")
     pbar = ib()
@@ -268,7 +268,8 @@ def learning_base_rdm_tw2(nb_nodes, _, feature_size):
             if len(learning_base[1]) < feature_size:
                 learning_base[1].append(graph)
         pbar(((len(learning_base[0])+len(learning_base[1]))/(feature_size*2))*100)
-
+        # tmp = 1 if tmp == 0 else 0
+        # print(len(learning_base[0]), len(learning_base[1]), tmp)
     return learning_base
         # mmd.show_graph(graph)
 

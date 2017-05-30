@@ -1,10 +1,18 @@
 from minerminor import mm_generator as mmg
 from minerminor import mm_draw as mmd
+from minerminor import mm_utils as mmu
 import networkx as nx
-
+import os
 # mmg.certf_tw2(a)
 
-learning_base = mmg.learning_base_rdm_tw2(14, None, 1000)
+feature_size = 1000
+
+learning_base = mmg.learning_base_rdm_tw2(18, None, feature_size)
+
+if not os.path.exists("bases/base_tw2_rdm"):
+    os.makedirs("bases/base_tw2_rdm")
+
+mmu.store_base(learning_base, "bases/base_tw2_rdm/base_tw2_rdm_"+str(feature_size))
 
 # for i in learning_base[0]:
 #     mmd.show_graph(i)

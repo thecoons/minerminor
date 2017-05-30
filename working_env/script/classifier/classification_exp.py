@@ -30,7 +30,7 @@ parser.add_argument("-s", "--save", action='store_true', default=False, help="Sa
 
 args = parser.parse_args()
 
-resultat_file = open("resultats/{0}_{1}.txt".format(args.path, dt.datetime.now().time()), "a")
+resultat_file = open("resultats/clf_log.txt".format(args.path, dt.datetime.now().time()), "a")
 
 for directory in os.listdir(args.path):
     for classifieur in args.classifieur:
@@ -65,4 +65,4 @@ for directory in os.listdir(args.path):
             print(to_save)
             resultat_file.write(to_save)
             if args.save:
-                joblib.dump(clf, 'classifier/{0}_{1}_{2}.pkl'.format(classifieur.__name__, representation.__name__, len(label_set)))
+                joblib.dump(clf, 'classifier/{0}_{1}_{2}_{3}.pkl'.format(classifieur.__name__, representation.__name__, len(label_set), directory))
