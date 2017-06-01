@@ -8,13 +8,13 @@ import networkx as nx
 import keras as ks
 
 
-clf_path = "classifier/clf_tw2_18/clf_cnn_tw2_rdm_lapla.h5"
-base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
-# arr_rep = [lambda x: np.squeeze(np.asarray(nx.to_numpy_matrix(x).reshape(-1)))]
-arr_rep = [lambda x: np.squeeze(np.asarray(nx.laplacian_matrix(x).toarray().reshape(-1)))]
+clf_path = "classifier/clf_tw1_18/MLPClassifier_adjacency_2000_pTree-basic-cycle-generation_18_[0, 1]_1000.pkl"
+base_path = "bases/base_TW1/pTree-basic-cycle-generation_18_[0, 1]_1000"
+arr_rep = [lambda x: np.squeeze(np.asarray(nx.to_numpy_matrix(x).reshape(-1)))]
+# arr_rep = [lambda x: np.squeeze(np.asarray(nx.laplacian_matrix(x).toarray().reshape(-1)))]
 
 graph_dim = 18
-keras_model = True
+keras_model = False
 nbr_classes = 2
 
 
