@@ -8,11 +8,12 @@ import networkx as nx
 import keras as ks
 
 
-clf_path = "classifier/model_cnn_test.h5"
-base_path = "bases/base_rdm_kp/learning-base-rdm_14_[0, 1]_1000"
+clf_path = "classifier/clf_tw2_18/clf_cnn_tw2_rdm_lapla.h5"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
 # arr_rep = [lambda x: np.squeeze(np.asarray(nx.to_numpy_matrix(x).reshape(-1)))]
-arr_rep = [lambda x: nx.laplacian_matrix(x).toarray()]
-graph_dim = 14
+arr_rep = [lambda x: np.squeeze(np.asarray(nx.laplacian_matrix(x).toarray().reshape(-1)))]
+
+graph_dim = 18
 keras_model = True
 nbr_classes = 2
 

@@ -1,0 +1,222 @@
+clf_path = "classifier/clf_tw2_18/DecisionTreeClassifier_adjacency_2000_base-tw2-rdm_18_[2,3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.77      0.84      0.80      1000
+!P       0.82      0.75      0.79      1000
+
+avg / total       0.80      0.80      0.79      2000
+
+
+[[836 164]
+[246 754]]
+#####
+
+clf_path = "classifier/clf_tw2_18/DecisionTreeClassifier_adjacency_2000_learning-base-tw2_18_[1, 2, 3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.61      0.95      0.74      1000
+!P       0.89      0.39      0.54      1000
+
+avg / total       0.75      0.67      0.64      2000
+
+
+[[951  49]
+[610 390]]
+#######
+
+clf_path = "classifier/clf_tw2_18/SVC_adjacency_2000_base-tw2-rdm_18_[2,3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.90      0.88      0.89      1000
+!P       0.89      0.90      0.89      1000
+
+avg / total       0.89      0.89      0.89      2000
+
+
+[[883 117]
+[ 98 902]]
+######
+
+clf_path = "classifier/clf_tw2_18/SVC_adjacency_2000_learning-base-tw2_18_[1, 2, 3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.85      0.89      0.87      1000
+!P       0.88      0.84      0.86      1000
+
+avg / total       0.87      0.87      0.87      2000
+
+
+[[889 111]
+[156 844]]
+######
+
+clf_path = "classifier/clf_tw2_18/MLPClassifier_adjacency_2000_base-tw2-rdm_18_[2,3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.92      0.87      0.90      1000
+!P       0.88      0.93      0.90      1000
+
+avg / total       0.90      0.90      0.90      2000
+
+
+[[869 131]
+[ 72 928]]
+######
+
+clf_path = "classifier/clf_tw2_18/MLPClassifier_adjacency_2000_learning-base-tw2_18_[1, 2, 3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.91      0.88      0.89      1000
+!P       0.88      0.91      0.90      1000
+
+avg / total       0.89      0.89      0.89      2000
+
+
+[[881 119]
+[ 92 908]]
+######
+
+clf_path = "classifier/clf_tw2_18/clf_cnn_tw2_rdm_adja.h5"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.96      0.87      0.91      1000
+!P       0.88      0.97      0.92      1000
+
+avg / total       0.92      0.92      0.92      2000
+
+
+[[868 132]
+[ 33 967]]
+#######
+
+clf_path = "classifier/clf_tw2_18/clf_cnn_tw2_rdm_adja.h5"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.96      0.87      0.91      1000
+!P       0.88      0.97      0.92      1000
+
+avg / total       0.92      0.92      0.92      2000
+
+
+[[868 132]
+[ 33 967]]
+######
+
+clf_path = "classifier/clf_tw2_18/DecisionTreeClassifier_laplacian_2000_base-tw2-rdm_18_[2,3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.83      0.85      0.84      1000
+!P       0.85      0.82      0.84      1000
+
+avg / total       0.84      0.84      0.84      2000
+
+
+[[853 147]
+[176 824]]
+#####
+
+clf_path = "classifier/clf_tw2_18/DecisionTreeClassifier_laplacian_2000_learning-base-tw2_18_[1, 2, 3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.92      0.86      0.89      1000
+!P       0.87      0.93      0.90      1000
+
+avg / total       0.89      0.89      0.89      2000
+
+
+[[859 141]
+[ 73 927]]
+#######
+
+clf_path = "classifier/clf_tw2_18/SVC_laplacian_2000_base-tw2-rdm_18_[2,3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.96      0.87      0.91      1000
+!P       0.88      0.96      0.92      1000
+
+avg / total       0.92      0.92      0.92      2000
+
+
+[[872 128]
+[ 39 961]]
+######
+clf_path = "classifier/clf_tw2_18/SVC_laplacian_2000_learning-base-tw2_18_[1, 2, 3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.87      0.89      0.88      1000
+!P       0.88      0.87      0.88      1000
+
+avg / total       0.88      0.88      0.88      2000
+
+
+[[885 115]
+[132 868]]
+#######
+
+clf_path = "classifier/clf_tw2_18/MLPClassifier_laplacian_2000_base-tw2-rdm_18_[2,3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.92      0.88      0.90      1000
+!P       0.88      0.93      0.90      1000
+
+avg / total       0.90      0.90      0.90      2000
+
+
+[[875 125]
+[ 72 928]]
+######
+
+clf_path = "classifier/clf_tw2_18/MLPClassifier_laplacian_2000_learning-base-tw2_18_[1, 2, 3]_1000.pkl"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.92      0.88      0.90      1000
+!P       0.88      0.92      0.90      1000
+
+avg / total       0.90      0.90      0.90      2000
+
+
+[[879 121]
+[ 80 920]]
+######
+
+clf_path = "classifier/clf_tw2_18/clf_cnn_tw2_rdm_lapla.h5"
+base_path = "bases/base_tw2_rdm_test/learning-base-rdm-tw2_18_[0, 1]_1000"
+
+precision    recall  f1-score   support
+
+P       0.97      0.87      0.92      1000
+!P       0.88      0.97      0.92      1000
+
+avg / total       0.92      0.92      0.92      2000
+
+
+[[869 131]
+[ 30 970]]

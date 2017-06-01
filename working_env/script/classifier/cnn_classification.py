@@ -18,6 +18,21 @@ from keras.callbacks import EarlyStopping
 import os
 
 
+def nn_model():
+    """Model v0.1."""
+    model = Sequential()
+    model.add(Flatten(input_shape=input_shape))
+    model.add(Dense(128, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(num_classes, activation='softmax'))
+
+    model.compile(loss=keras.losses.categorical_crossentropy,
+                  optimizer=keras.optimizers.Adadelta(),
+                  metrics=['accuracy'])
+
+    return model
+
+
 def cnn_model_alpha():
     """Model v0.1."""
     model = Sequential()
@@ -59,13 +74,14 @@ def cnn_model_test():
 
 
 # hyperparameters
-init_model = cnn_model_test
+init_model = nn_model
+n2v = True
 save = True
 batch_size = 128
 num_classes = 2
 epochs = 200
-title = "clf_cnn_planar_rdm_lapla"
-base_path = "bases/base_planar/learning-base-planar_18_[0, 1]_1000"
+title = "clf_cnn_planar_rdm_n2v"
+base_path = "bases/base_planar_rdm_18_node2vec"
 graph_dim = 18
 early_stopping = EarlyStopping(monitor='val_loss', patience=20)
 # rep_1 = lambda x: nx.to_numpy_matrix(x)
@@ -75,12 +91,14 @@ rep_arr = [rep_1]
 # -- declaration input_shape (lis en global par la fonction de creation model... pas beau !)
 input_shape = (graph_dim, graph_dim, 1)
 
+
 # load data
-learning_base = mmu.load_base(base_path)
-
-# representation
-learning_base = mmr.learning_base_to_rep(learning_base, rep_arr)
-
+if not n2v:
+    learning_base = mmu.load_base(base_path)
+    # representation
+    learning_base = mmr.learning_base_to_rep(learning_base, rep_arr)
+else:
+    learning_base = mmu.load_base_n2v(base_path)
 # datarows formating
 # -- extract from learning base et format it
 data_set, label_set = mmu.create_sample_label_classification(learning_base)

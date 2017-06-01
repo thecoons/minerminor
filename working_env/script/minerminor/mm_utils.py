@@ -10,6 +10,7 @@ import csv
 import datetime
 from sklearn.model_selection import learning_curve
 import random as rdm
+import csv
 from keras.models import Sequential
 from keras.layers import Lambda, Conv2D, MaxPooling2D, Dropout, Dense, Flatten
 # from minerminor import mm_representation as mmr
@@ -99,6 +100,26 @@ def load_base(label_set_name):
             labels_set.append(label_set)
 
     return labels_set
+
+
+def load_base_n2v(label_set_name):
+    """Load the learning base from CSV N2V."""
+    learning_base = [[], []]
+    list_labels_files = [f for f in os.listdir(label_set_name) if os.path.isfile(os.path.join(label_set_name, f))]
+    for files_name in list_labels_files:
+        arr_file = files_name.split("_")
+        with open(os.path.join(label_set_name, files_name)) as f:
+            incsv = csv.reader(f, delimiter=' ')
+            next(incsv)
+            mat = []
+            for row in incsv:
+                mat.append(row[1:])
+            learning_base[int(arr_file[0])].append(np.matrix(mat))
+
+    return learning_base
+    # print(arr_file)
+    # print(list_labels_files[0])
+
 
 
 def tw_split_base(base_path):

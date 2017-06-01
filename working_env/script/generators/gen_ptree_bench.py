@@ -6,7 +6,7 @@ import argparse
 
 parser = argparse.ArgumentParser(prog="P-Tree Generation")
 parser.add_argument("-g", "--arr_generators", nargs='*',
-                    default=[mmg.learning_base_rdm_tw2])
+                    default=[mmg.learning_base_planar])
 parser.add_argument("-n", "--arr_rank_nodes", default=[10], nargs='*',
                     help="Nodes array", type=int)
 parser.add_argument("-s", "--arr_features_size", default=[10], nargs='*',

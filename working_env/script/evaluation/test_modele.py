@@ -12,7 +12,7 @@ from sklearn.metrics import classification_report
 # Path to classifier to test
 mypath = "classifier/class_test"
 # Base to use for testing
-base_path = "bases/base_rdm_kp"
+base_path = "bases/base_tw1_rdm_test"
 representation = [mmr.adjacency, mmr.laplacian]
 res = {}
 resultat_file = open("resultats/log_testing.txt", "w")
