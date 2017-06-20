@@ -8,12 +8,12 @@ import numpy as np
 import networkx as nx
 import keras as ks
 
-clf_path = ""
-base_renf_path = "bases/base_TW1/learning-base-rdm_18_[0, 1]_1000"
+clf_path = "classifier/clf_planar_18/clf_cnn_planar_rdm_adja.h5"
+base_renf_path = "bases/base_planar_rdm_test/learning-base-planar_18_[0, 1]_1000"
 # arr_rep = [lambda x: np.squeeze(np.asarray(nx.to_numpy_matrix(x).reshape(-1)))]
 arr_rep = [lambda x: np.squeeze(np.asarray(nx.laplacian_matrix(x).toarray().reshape(-1)))]
 
-keras_model = False
+keras_model = True
 graph_dim = 18
 nbr_classes = 2
 

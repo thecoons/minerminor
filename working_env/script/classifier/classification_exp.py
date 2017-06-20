@@ -44,7 +44,7 @@ for directory in os.listdir(args.path):
             clf = classifieur()
             cv = ShuffleSplit(n_splits=10, test_size=0.1, random_state=0)
             title = '{0}_{1}_{2}'.format(classifieur.__name__, representation.__name__, len(label_set))
-            mmd.plot_learning_curve(clf, title, data_set, label_set, ylim=(0., 1.01), cv=cv, n_jobs=4)
+            # mmd.plot_learning_curve(clf, title, data_set, label_set, ylim=(0., 1.01), cv=cv, n_jobs=4)
             pred, miss, clf = mmu.learning(clf, X_train, X_test, y_train, y_test)
 
             score = cross_val_score(clf, X_test, y_test, cv=10)
